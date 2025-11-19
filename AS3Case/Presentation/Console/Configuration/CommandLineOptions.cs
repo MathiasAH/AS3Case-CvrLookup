@@ -6,7 +6,7 @@ namespace AS3Case.Presentation.Console.Configuration
     {
         public static List<Option> Options()
         {
-            List<Option> options = [];
+            List<Option> options = new List<Option>();
             Option<string> registrationNumber = new("--rn")
             {
                 Description = "Registration number number of the company to retrieve (CVR/VAT)."

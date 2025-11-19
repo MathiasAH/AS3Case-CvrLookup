@@ -1,7 +1,7 @@
 ﻿using AS3Case.Domain.Entities;
 using AS3Case.Domain.Interfaces;
 using AS3Case.Domain.ValueObjects;
-using AS3Case.Infrastructure.ApiClients.DK.Dto;
+using AS3Case.Infrastructure.ApiClients.NO.Dto;
 using Newtonsoft.Json;
 
 namespace AS3Case.Infrastructure.ApiClients.NO
