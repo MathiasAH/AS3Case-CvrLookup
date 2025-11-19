@@ -27,7 +27,7 @@ namespace AS3Case.Presentation.Console.Configuration
 
             Option<string> country = new("--country")
             {
-                Description = "Country from which the company is in."
+                Description = "Country from which the company is in. (DK or NO)"
             };
             options.Add(country);
 

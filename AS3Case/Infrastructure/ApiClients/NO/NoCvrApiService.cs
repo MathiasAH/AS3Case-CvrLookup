@@ -1,5 +1,6 @@
 ﻿using AS3Case.Domain.Entities;
 using AS3Case.Domain.Interfaces;
+using AS3Case.Domain.ValueObjects;
 using AS3Case.Infrastructure.ApiClients.DK.Dto;
 using Newtonsoft.Json;
 
@@ -33,9 +34,9 @@ namespace AS3Case.Infrastructure.ApiClients.NO
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<Company?> LookupByRegistrationNumberAsync(string registrationNumber)
+        public async Task<Company?> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&vat={registrationNumber}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&vat={registrationNumber.Value}");
             if (responseString is null)
             {
                 return null;
@@ -53,9 +54,9 @@ namespace AS3Case.Infrastructure.ApiClients.NO
                 phoneNumber: result.Phone
             );
         }
-        public async Task<Company?> LookupByNameAsync(string name)
+        public async Task<Company?> LookupByNameAsync(CompanyName name)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&name={name}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&name={name.Value}");
 
             if (responseString is null)
             {
@@ -74,9 +75,9 @@ namespace AS3Case.Infrastructure.ApiClients.NO
                 phoneNumber: result.Phone
             );
         }
-        public async Task<Company?> LookupByPhoneNumberAsync(string phoneNumber)
+        public async Task<Company?> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&phone={phoneNumber}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&phone={phoneNumber.Value}");
             if (responseString is null)
             {
                 return null;

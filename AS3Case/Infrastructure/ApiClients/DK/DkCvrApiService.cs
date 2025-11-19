@@ -1,5 +1,6 @@
 ﻿using AS3Case.Domain.Entities;
 using AS3Case.Domain.Interfaces;
+using AS3Case.Domain.ValueObjects;
 using AS3Case.Infrastructure.ApiClients.DK.Dto;
 using Newtonsoft.Json;
 
@@ -35,9 +36,9 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<Company?> LookupByRegistrationNumberAsync(string registrationNumber)
+        public async Task<Company?> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&vat={registrationNumber}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&vat={registrationNumber.Value}");
             ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
@@ -51,9 +52,9 @@ namespace AS3Case.Infrastructure.ApiClients.DK
                 phoneNumber: result.Phone
             );
         }
-        public async Task<Company?> LookupByNameAsync(string name)
+        public async Task<Company?> LookupByNameAsync(CompanyName name)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&name={name}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&name={name.Value}");
 
             ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
@@ -68,9 +69,9 @@ namespace AS3Case.Infrastructure.ApiClients.DK
                 phoneNumber: result.Phone
             );
         }
-        public async Task<Company?> LookupByPhoneNumberAsync(string phoneNumber)
+        public async Task<Company?> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&phone={phoneNumber}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&phone={phoneNumber.Value}");
             ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
