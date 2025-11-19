@@ -2,7 +2,7 @@
   "profiles": {
     "AS3Case": {
       "commandName": "Project",
-      "commandLineArgs": "--country dk --rn 43317032"
+      "commandLineArgs": "--name hummel --country no"
     }
   }
 }

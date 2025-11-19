@@ -52,7 +52,7 @@ namespace AS3Case.Application.UseCases.CompanyLookup
 
             Company result;
 
-            Enums.Country country = request.Country switch
+            Enums.Country country = request.Country.ToLower() switch
             {
                 "dk" => Enums.Country.Denmark,
                 "no" => Enums.Country.Norway,

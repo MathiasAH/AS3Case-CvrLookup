@@ -27,7 +27,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK.Dto
         public string Companydesc { get; set; }
         public string Creditstartdate { get; set; }
         public int? Creditstatus { get; set; }
-        public bool Creditbankrupt { get; set; }
+        public bool? Creditbankrupt { get; set; }
         public ApiOwners[] Owners { get; set; }
         public ApipPoductionunits[] Productionunits { get; set; }
         public int T { get; set; }

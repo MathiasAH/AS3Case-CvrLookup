@@ -64,15 +64,15 @@
             }
             else if(rn != null && (phone != null || name != null))
             {
-                throw new ArgumentException("You can only use of of either --rn, --phone or --name");
+                throw new ArgumentException("You can only use one of either --rn, --phone or --name");
             }
             else if (phone != null && (rn != null || name != null))
             {
-                throw new ArgumentException("You can only use of of either --rn, --phone or --name");
+                throw new ArgumentException("You can only use one of either --rn, --phone or --name");
             }
             else if (name != null && (rn != null || phone != null))
             {
-                throw new ArgumentException("You can only use of of either --rn, --phone or --name");
+                throw new ArgumentException("You can only use one of either --rn, --phone or --name");
             }
 
             return new LookupCompanyCommand(
