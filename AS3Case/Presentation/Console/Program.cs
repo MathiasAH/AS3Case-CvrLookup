@@ -5,6 +5,7 @@ using AS3Case.Presentation.Console.Commands;
 using AS3Case.Presentation.Console.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
+using System.CommandLine.Parsing;
 
 try
 {
@@ -17,7 +18,7 @@ try
 
     if (parseResult.Errors.Count > 0)
     {
-        foreach (var error in parseResult.Errors)
+        foreach (ParseError error in parseResult.Errors)
         {
             Console.WriteLine(error.ToString());
         }
@@ -31,7 +32,7 @@ try
 
     CompanyLookupRequest request = service.ToRequest(command);
 
-    Company result = await service.HandleRequestAsync(request);
+    Company? result = await service.HandleRequestAsync(request);
 
     if (result != null)
     {

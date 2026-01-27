@@ -1,7 +1,6 @@
 ﻿using AS3Case.Application.Enums;
 using AS3Case.Application.Interfaces;
 using AS3Case.Domain.Entities;
-using AS3Case.Domain.Interfaces;
 using AS3Case.Domain.ValueObjects;
 using AS3Case.Presentation.Console.Commands;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +8,9 @@ namespace AS3Case.Application.UseCases.CompanyLookup
 {
     public sealed class CompanyLookupUseCase : ICompanyLookupUseCase
     {
-        private readonly ICompanyLookupServiceFactory _factory;
+        private readonly ICompanyLookupProviderResolver _factory;
 
-        public CompanyLookupUseCase(ICompanyLookupServiceFactory factory)
+        public CompanyLookupUseCase(ICompanyLookupProviderResolver factory)
         {
             _factory = factory;
         }
@@ -45,12 +44,12 @@ namespace AS3Case.Application.UseCases.CompanyLookup
             }
             throw new ValidationException("You must specify either name, phone, or registration number.");
         }
-        public async Task<Company> HandleRequestAsync(CompanyLookupRequest request)
+        public async Task<Company?> HandleRequestAsync(CompanyLookupRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Value))
                 throw new ArgumentException("Value cannot be empty");
 
-            Company result;
+            Company? result;
 
             Enums.Country country = request.Country.ToLower() switch
             {
@@ -61,7 +60,7 @@ namespace AS3Case.Application.UseCases.CompanyLookup
                 _ => throw new Exception("Please provide a valid country."),
             };
 
-            ICompanyLookupService service = _factory.GetService(country);
+            ICompanyLookupProvider service = _factory.GetProvider(country);
 
             switch (request.Type)
             {

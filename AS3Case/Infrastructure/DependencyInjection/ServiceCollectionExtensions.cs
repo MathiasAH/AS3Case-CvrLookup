@@ -13,7 +13,7 @@ namespace AS3Case.Infrastructure.DependencyInjection
             services.AddHttpClient<ApiClients.NO.NoCvrApiService>();
             //  services.AddHttpClient<SeCompanyLookupService>();
 
-            services.AddSingleton<ICompanyLookupServiceFactory, CompanyLookupServiceFactory>();
+            services.AddSingleton<ICompanyLookupProviderResolver, CompanyLookupProviderResolver>();
 
             services.AddSingleton<ICompanyLookupUseCase, CompanyLookupUseCase>();
 

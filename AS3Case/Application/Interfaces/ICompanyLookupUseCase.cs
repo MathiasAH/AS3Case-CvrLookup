@@ -6,7 +6,7 @@ namespace AS3Case.Application.Interfaces
 {
     public interface ICompanyLookupUseCase
     {
-        Task<Company> HandleRequestAsync(CompanyLookupRequest request);
+        Task<Company?> HandleRequestAsync(CompanyLookupRequest request);
         CompanyLookupRequest ToRequest(LookupCompanyCommand cmd);
     }
 }

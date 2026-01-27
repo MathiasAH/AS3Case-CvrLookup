@@ -1,12 +1,12 @@
-﻿using AS3Case.Domain.Entities;
-using AS3Case.Domain.Interfaces;
+﻿using AS3Case.Application.Interfaces;
+using AS3Case.Domain.Entities;
 using AS3Case.Domain.ValueObjects;
 using AS3Case.Infrastructure.ApiClients.NO.Dto;
 using Newtonsoft.Json;
 
 namespace AS3Case.Infrastructure.ApiClients.NO
 {
-    public class NoCvrApiService : ICompanyLookupService
+    public class NoCvrApiService : ICompanyLookupProvider
     {
         private readonly HttpClient _httpClient;
         private readonly Uri? _baseAddress;
