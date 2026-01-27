@@ -1,8 +1,8 @@
 ﻿using AS3Case.Domain.Entities;
 using AS3Case.Domain.ValueObjects;
-namespace AS3Case.Domain.Interfaces
+namespace AS3Case.Application.Interfaces
 {
-    public interface ICompanyLookupService
+    public interface ICompanyLookupProvider
     {
         Task<Company?> LookupByRegistrationNumberAsync(CvrNumber registrationNumber);
         Task<Company?> LookupByNameAsync(CompanyName name);

@@ -1,20 +1,19 @@
 ﻿using AS3Case.Application.Enums;
 using AS3Case.Application.Interfaces;
-using AS3Case.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AS3Case.Infrastructure.ApiClients
 {
-    public class CompanyLookupServiceFactory : ICompanyLookupServiceFactory
+    public class CompanyLookupProviderResolver : ICompanyLookupProviderResolver
     {
         private readonly IServiceProvider _provider;
 
-        public CompanyLookupServiceFactory(IServiceProvider provider)
+        public CompanyLookupProviderResolver(IServiceProvider provider)
         {
             _provider = provider;
         }
 
-        public ICompanyLookupService GetService(Country country) =>
+        public ICompanyLookupProvider GetProvider(Country country) =>
             country switch
             {
                 Country.Denmark => _provider.GetRequiredService<DK.DkCvrApiService>(),
