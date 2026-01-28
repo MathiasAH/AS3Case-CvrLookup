@@ -32,7 +32,7 @@ try
 
     CompanyLookupRequest request = service.ToRequest(command);
 
-    Company? result = await service.HandleRequestAsync(request);
+    Company result = await service.HandleRequestAsync(request);
 
     if (result != null)
     {

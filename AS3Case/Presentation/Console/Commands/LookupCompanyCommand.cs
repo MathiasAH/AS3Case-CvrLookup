@@ -2,15 +2,15 @@
 {
     public class LookupCompanyCommand
     {
-        public string? Cvr { get; }
-        public string? Phone { get; }
-        public string? Name { get; }
+        public string Cvr { get; }
+        public string Phone { get; }
+        public string Name { get; }
         public string Country { get; }
 
         public LookupCompanyCommand(
-            string? cvr,
-            string? phone,
-            string? name,
+            string cvr,
+            string phone,
+            string name,
             string country)
         {
             Cvr = cvr;
@@ -20,9 +20,9 @@
         }
         public static LookupCompanyCommand Parse(string[] args)
         {
-            string? rn = null;
-            string? phone = null;
-            string? name = null;
+            string rn = null;
+            string phone = null;
+            string name = null;
             string country = "DK"; // default
 
             for (int i = 0; i < args.Length; i++)
