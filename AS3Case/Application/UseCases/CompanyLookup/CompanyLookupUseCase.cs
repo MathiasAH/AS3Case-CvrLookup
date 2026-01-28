@@ -44,12 +44,12 @@ namespace AS3Case.Application.UseCases.CompanyLookup
             }
             throw new ValidationException("You must specify either name, phone, or registration number.");
         }
-        public async Task<Company?> HandleRequestAsync(CompanyLookupRequest request)
+        public async Task<Company> HandleRequestAsync(CompanyLookupRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Value))
                 throw new ArgumentException("Value cannot be empty");
 
-            Company? result;
+            Company result;
 
             Enums.Country country = request.Country.ToLower() switch
             {

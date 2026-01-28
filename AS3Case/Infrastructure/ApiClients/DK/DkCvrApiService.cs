@@ -9,7 +9,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
     public class DkCvrApiService : ICompanyLookupProvider
     {
         private readonly HttpClient _httpClient;
-        private readonly Uri? _baseAddress;
+        private readonly Uri _baseAddress;
         public DkCvrApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -18,7 +18,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             _baseAddress = new Uri($"https://cvrapi.dk/api?");
         }
 
-        public async Task<ApiResult?> Search(string search)
+        public async Task<ApiResult> Search(string search)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&search={search}");
             if (responseString is null)
@@ -27,7 +27,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<ApiResult?> GetByProductionUnit(int productionUnitNumber)
+        public async Task<ApiResult> GetByProductionUnit(int productionUnitNumber)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&produ={productionUnitNumber}");
             if (responseString is null)
@@ -36,53 +36,53 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<Company?> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
+        public async Task<Company> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&vat={registrationNumber.Value}");
-            ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
+            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
                 return null;
             }
             return new Company(
-                name: result.Name,
+                name: CompanyName.Create(result.Name),
                 address: result.Address,
                 city: result.City,
                 zipCode: result.Zipcode,
-                phoneNumber: result.Phone
+                phoneNumber: PhoneNumber.Create(result.Phone)
             );
         }
-        public async Task<Company?> LookupByNameAsync(CompanyName name)
+        public async Task<Company> LookupByNameAsync(CompanyName name)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&name={name.Value}");
 
-            ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
+            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
                 return null;
             }
             return new Company(
-                name: result.Name,
+                name: CompanyName.Create(result.Name),
                 address: result.Address,
                 city: result.City,
                 zipCode: result.Zipcode,
-                phoneNumber: result.Phone
+                phoneNumber: PhoneNumber.Create(result.Phone)
             );
         }
-        public async Task<Company?> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
+        public async Task<Company> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&phone={phoneNumber.Value}");
-            ApiResult? result = JsonConvert.DeserializeObject<ApiResult>(responseString);
+            ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
                 return null;
             }
             return new Company(
-                name: result.Name,
+                name: CompanyName.Create(result.Name),
                 address: result.Address,
                 city: result.City,
                 zipCode: result.Zipcode,
-                phoneNumber: result.Phone
+                phoneNumber: PhoneNumber.Create(result.Phone)
             );
         }
     }

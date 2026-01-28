@@ -13,7 +13,7 @@ namespace AS3Case.Domain.ValueObjects
         {
             Value = value;
         }
-        public static bool TryParse(string input, out CompanyName? cvr)
+        public static bool TryParse(string input, out CompanyName cvr)
         {
             cvr = null;
 

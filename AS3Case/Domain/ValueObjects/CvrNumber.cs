@@ -7,7 +7,7 @@
         {
             Value = value;
         }
-        public static bool TryParse(string input, out CvrNumber? cvr)
+        public static bool TryParse(string input, out CvrNumber cvr)
         {
             cvr = null;
             

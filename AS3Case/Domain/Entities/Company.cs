@@ -1,14 +1,16 @@
-﻿namespace AS3Case.Domain.Entities
+﻿using AS3Case.Domain.ValueObjects;
+
+namespace AS3Case.Domain.Entities
 {
     public class Company
     {
-        public string Name { get; set; }
+        public CompanyName Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
-        public string PhoneNumber { get; set; }
+        public PhoneNumber PhoneNumber { get; set; }
 
-        public Company(string name, string address, string city, string zipCode, string phoneNumber)
+        public Company(CompanyName name, string address, string city, string zipCode, PhoneNumber phoneNumber)
         {
             Name = name;
             Address = address;
