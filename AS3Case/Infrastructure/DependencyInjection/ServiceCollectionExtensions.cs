@@ -1,4 +1,4 @@
-﻿using AS3Case.Application.Interfaces;
+﻿using AS3Case.Application.Contracts.Interfaces;
 using AS3Case.Application.UseCases.CompanyLookup;
 using AS3Case.Infrastructure.ApiClients;
 using Microsoft.Extensions.DependencyInjection;

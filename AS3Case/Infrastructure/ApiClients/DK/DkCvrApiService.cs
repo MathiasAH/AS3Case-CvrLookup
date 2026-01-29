@@ -1,6 +1,5 @@
-﻿using AS3Case.Application.Interfaces;
-using AS3Case.Domain.Entities;
-using AS3Case.Domain.ValueObjects;
+﻿using AS3Case.Application.Contracts.Dto;
+using AS3Case.Application.Contracts.Interfaces;
 using AS3Case.Infrastructure.ApiClients.DK.Dto;
 using Newtonsoft.Json;
 
@@ -14,10 +13,8 @@ namespace AS3Case.Infrastructure.ApiClients.DK
         {
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "AS3 - AS3 Software Developer Case - Mathias Ancher Harringer +45 20473276");
-
             _baseAddress = new Uri($"https://cvrapi.dk/api?");
         }
-
         public async Task<ApiResult> Search(string search)
         {
             string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&search={search}");
@@ -36,54 +33,57 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<Company> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
+        public async Task<ExternalCompanyData> LookupByRegistrationNumberAsync(string registrationNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&vat={registrationNumber.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&vat={registrationNumber}");
             ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
-                return null;
+                throw new Exception("Company not found");
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
-        public async Task<Company> LookupByNameAsync(CompanyName name)
+        public async Task<ExternalCompanyData> LookupByNameAsync(string name)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&name={name.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&name={name}");
 
             ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
-                return null;
+                throw new Exception("Company not found");
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
-        public async Task<Company> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
+        public async Task<ExternalCompanyData> LookupByPhoneNumberAsync(string phoneNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&phone={phoneNumber.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=dk&phone={phoneNumber}");
             ApiResult result = JsonConvert.DeserializeObject<ApiResult>(responseString);
             if (result is null)
             {
-                return null;
+                throw new Exception("Company not found");
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
     }
 }

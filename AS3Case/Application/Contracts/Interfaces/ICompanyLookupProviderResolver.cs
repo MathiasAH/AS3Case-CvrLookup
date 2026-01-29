@@ -1,6 +1,6 @@
 ﻿using AS3Case.Application.Enums;
 
-namespace AS3Case.Application.Interfaces
+namespace AS3Case.Application.Contracts.Interfaces
 {
     public interface ICompanyLookupProviderResolver
     {

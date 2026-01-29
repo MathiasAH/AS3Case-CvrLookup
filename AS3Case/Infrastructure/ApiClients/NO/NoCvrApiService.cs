@@ -1,6 +1,5 @@
-﻿using AS3Case.Application.Interfaces;
-using AS3Case.Domain.Entities;
-using AS3Case.Domain.ValueObjects;
+﻿using AS3Case.Application.Contracts.Dto;
+using AS3Case.Application.Contracts.Interfaces;
 using AS3Case.Infrastructure.ApiClients.NO.Dto;
 using Newtonsoft.Json;
 
@@ -34,9 +33,9 @@ namespace AS3Case.Infrastructure.ApiClients.NO
             }
             return JsonConvert.DeserializeObject<ApiResult>(responseString);
         }
-        public async Task<Company> LookupByRegistrationNumberAsync(CvrNumber registrationNumber)
+        public async Task<ExternalCompanyData> LookupByRegistrationNumberAsync(string registrationNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&vat={registrationNumber.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&vat={registrationNumber}");
             if (responseString is null)
             {
                 return null;
@@ -46,17 +45,18 @@ namespace AS3Case.Infrastructure.ApiClients.NO
             {
                 return null;
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
-        public async Task<Company> LookupByNameAsync(CompanyName name)
+        public async Task<ExternalCompanyData> LookupByNameAsync(string name)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&name={name.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&name={name}");
 
             if (responseString is null)
             {
@@ -67,17 +67,18 @@ namespace AS3Case.Infrastructure.ApiClients.NO
             {
                 return null;
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
-        public async Task<Company> LookupByPhoneNumberAsync(PhoneNumber phoneNumber)
+        public async Task<ExternalCompanyData> LookupByPhoneNumberAsync(string phoneNumber)
         {
-            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&phone={phoneNumber.Value}");
+            string responseString = await _httpClient.GetStringAsync(_baseAddress + $"country=no&phone={phoneNumber}");
             if (responseString is null)
             {
                 return null;
@@ -87,13 +88,14 @@ namespace AS3Case.Infrastructure.ApiClients.NO
             {
                 return null;
             }
-            return new Company(
-                name: CompanyName.Create(result.Name),
-                address: result.Address,
-                city: result.City,
-                zipCode: result.Zipcode,
-                phoneNumber: PhoneNumber.Create(result.Phone)
-            );
+            return new ExternalCompanyData
+            {
+                Name = result.Name,
+                Address = result.Address,
+                City = result.City,
+                ZipCode = result.Zipcode,
+                PhoneNumber = result.Phone
+            };
         }
     }
 }

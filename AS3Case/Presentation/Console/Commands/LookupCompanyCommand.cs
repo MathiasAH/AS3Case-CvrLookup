@@ -1,4 +1,8 @@
-﻿namespace AS3Case.Presentation.Console.Commands
+﻿using AS3Case.Application.Enums;
+using AS3Case.Application.UseCases.CompanyLookup;
+using System.ComponentModel.DataAnnotations;
+
+namespace AS3Case.Presentation.Console.Commands
 {
     public class LookupCompanyCommand
     {

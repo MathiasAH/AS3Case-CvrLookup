@@ -1,8 +1,9 @@
-﻿using AS3Case.Application.Interfaces;
+﻿using AS3Case.Application.Contracts.Interfaces;
 using AS3Case.Application.UseCases.CompanyLookup;
 using AS3Case.Domain.Entities;
 using AS3Case.Presentation.Console.Commands;
 using AS3Case.Presentation.Console.Configuration;
+using AS3Case.Presentation.Console.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
 using System.CommandLine.Parsing;
@@ -30,17 +31,17 @@ try
 
     LookupCompanyCommand command = LookupCompanyCommand.Parse(args);
 
-    CompanyLookupRequest request = service.ToRequest(command);
+    CompanyLookupRequest request = CommandMapper.ToRequest(command);
 
     Company result = await service.HandleRequestAsync(request);
 
     if (result != null)
     {
         Console.WriteLine(
-            $"Name: {result.Name}" + Environment.NewLine +
+            $"Name: {result.Name.Value}" + Environment.NewLine +
             $"Address: {result.Address}" + Environment.NewLine +
             $"Zip Code: {result.ZipCode}" + Environment.NewLine +
-            $"Phone Number: {result.PhoneNumber}" + Environment.NewLine +
+            $"Phone Number: {result.PhoneNumber.Value}" + Environment.NewLine +
             $"City: {result.City}"
             );
     }

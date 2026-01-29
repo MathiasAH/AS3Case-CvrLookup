@@ -1,5 +1,5 @@
-﻿using AS3Case.Application.Enums;
-using AS3Case.Application.Interfaces;
+﻿using AS3Case.Application.Contracts.Interfaces;
+using AS3Case.Application.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AS3Case.Infrastructure.ApiClients

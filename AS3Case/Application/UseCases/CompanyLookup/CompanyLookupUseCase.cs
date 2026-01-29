@@ -1,7 +1,8 @@
-﻿using AS3Case.Application.Enums;
-using AS3Case.Application.Interfaces;
+﻿using AS3Case.Application.Contracts.Dto;
+using AS3Case.Application.Contracts.Interfaces;
+using AS3Case.Application.Enums;
+using AS3Case.Application.Mappers;
 using AS3Case.Domain.Entities;
-using AS3Case.Domain.ValueObjects;
 using AS3Case.Presentation.Console.Commands;
 using System.ComponentModel.DataAnnotations;
 namespace AS3Case.Application.UseCases.CompanyLookup
@@ -14,36 +15,7 @@ namespace AS3Case.Application.UseCases.CompanyLookup
         {
             _factory = factory;
         }
-        public CompanyLookupRequest ToRequest(LookupCompanyCommand cmd)
-        {
-            if (!string.IsNullOrWhiteSpace(cmd.Name))
-            {
-                return new CompanyLookupRequest(
-                    LookupType.Name,
-                    cmd.Name,
-                    cmd.Country
-                );
-            }
 
-            if (!string.IsNullOrWhiteSpace(cmd.Phone))
-            {
-                return new CompanyLookupRequest(
-                    LookupType.Phone,
-                    cmd.Phone,
-                    cmd.Country
-                );
-            }
-
-            if (!string.IsNullOrWhiteSpace(cmd.Cvr))
-            {
-                return new CompanyLookupRequest(
-                    LookupType.RegistrationNumber,
-                    cmd.Cvr,
-                    cmd.Country
-                );
-            }
-            throw new ValidationException("You must specify either name, phone, or registration number.");
-        }
         public async Task<Company> HandleRequestAsync(CompanyLookupRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Value))
@@ -51,30 +23,30 @@ namespace AS3Case.Application.UseCases.CompanyLookup
 
             Company result;
 
-            Enums.Country country = request.Country.ToLower() switch
+            Country country = request.Country.ToLower() switch
             {
-                "dk" => Enums.Country.Denmark,
-                "no" => Enums.Country.Norway,
+                "dk" => Country.Denmark,
+                "no" => Country.Norway,
                 //"se" => Enums.Country.Sweden,
-                "" => Enums.Country.Denmark, //default
+                "" => Country.Denmark, //default
                 _ => throw new Exception("Please provide a valid country."),
             };
 
             ICompanyLookupProvider service = _factory.GetProvider(country);
-
+            ExternalCompanyData extData = new();
             switch (request.Type)
             {
                 case LookupType.Name:
-                    CompanyName name = CompanyName.Create(request.Value);
-                    result = await service.LookupByNameAsync(name);
+                    extData = await service.LookupByNameAsync(request.Value);
+                    result = CompanyMapper.FromExternalData(extData);
                     break;
                 case LookupType.Phone:
-                    PhoneNumber phoneNumber = PhoneNumber.Create(request.Value);
-                    result = await service.LookupByPhoneNumberAsync(phoneNumber);
+                    extData = await service.LookupByNameAsync(request.Value);
+                    result = CompanyMapper.FromExternalData(extData);
                     break;
                 case LookupType.RegistrationNumber:
-                    CvrNumber cvrNumber = CvrNumber.Create(request.Value);
-                    result = await service.LookupByRegistrationNumberAsync(cvrNumber);
+                    extData = await service.LookupByNameAsync(request.Value);
+                    result = CompanyMapper.FromExternalData(extData);
                     break;
                 default:
                     throw new NotSupportedException("Unsupported lookup type");

@@ -2,11 +2,10 @@
 using AS3Case.Domain.Entities;
 using AS3Case.Presentation.Console.Commands;
 
-namespace AS3Case.Application.Interfaces
+namespace AS3Case.Application.Contracts.Interfaces
 {
     public interface ICompanyLookupUseCase
     {
         Task<Company> HandleRequestAsync(CompanyLookupRequest request);
-        CompanyLookupRequest ToRequest(LookupCompanyCommand cmd);
     }
 }
