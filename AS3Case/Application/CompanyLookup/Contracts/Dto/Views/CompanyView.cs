@@ -1,6 +1,6 @@
-﻿namespace AS3Case.Application.Contracts.Dto
+﻿namespace AS3Case.Application.CompanyLookup.Contracts.Dto.Views
 {
-    public class ExternalCompanyData
+    public class CompanyView
     {
         public string Name { get; set; }
         public string Address { get; set; }

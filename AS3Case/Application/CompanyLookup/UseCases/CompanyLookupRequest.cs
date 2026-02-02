@@ -1,6 +1,6 @@
-﻿using AS3Case.Application.Enums;
+﻿using AS3Case.Application.CompanyLookup.Enums;
 
-namespace AS3Case.Application.UseCases.CompanyLookup
+namespace AS3Case.Application.CompanyLookup.UseCases
 {
     public class CompanyLookupRequest
     {

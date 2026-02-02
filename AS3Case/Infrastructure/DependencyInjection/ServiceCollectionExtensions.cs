@@ -1,5 +1,5 @@
-﻿using AS3Case.Application.Contracts.Interfaces;
-using AS3Case.Application.UseCases.CompanyLookup;
+﻿using AS3Case.Application.CompanyLookup.Contracts.Interfaces;
+using AS3Case.Application.CompanyLookup.UseCases;
 using AS3Case.Infrastructure.ApiClients;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +15,7 @@ namespace AS3Case.Infrastructure.DependencyInjection
 
             services.AddSingleton<ICompanyLookupProviderResolver, CompanyLookupProviderResolver>();
 
-            services.AddSingleton<ICompanyLookupUseCase, CompanyLookupUseCase>();
+            services.AddSingleton<ICompanyLookup, CompanyLookup>();
 
             return services;
         }

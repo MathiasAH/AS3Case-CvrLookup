@@ -1,6 +1,5 @@
-﻿using AS3Case.Application.Contracts.Interfaces;
-using AS3Case.Application.UseCases.CompanyLookup;
-using AS3Case.Domain.Entities;
+﻿using AS3Case.Application.CompanyLookup.Contracts.Dto.Views;
+using AS3Case.Application.CompanyLookup.UseCases;
 using AS3Case.Presentation.Console.Commands;
 using AS3Case.Presentation.Console.Configuration;
 using AS3Case.Presentation.Console.Mappers;
@@ -24,24 +23,24 @@ try
             Console.WriteLine(error.ToString());
         }
     }
-
-    ServiceProvider provider = SetupDI.BuildServiceProvider();
-
-    ICompanyLookupUseCase service = provider.GetRequiredService<ICompanyLookupUseCase>();
-
+    // First we build the request from the input from the UI
     LookupCompanyCommand command = LookupCompanyCommand.Parse(args);
-
     CompanyLookupRequest request = CommandMapper.ToRequest(command);
+    
+    // Then we pass the request to the correct use case via DI
+    ServiceProvider provider = SetupDI.BuildServiceProvider();
+    ICompanyLookup useCase = provider.GetRequiredService<ICompanyLookup>();
 
-    Company result = await service.HandleRequestAsync(request);
+    // The use case handles the request and returns a result which can be displayed in the UI
+    CompanyView result = await useCase.HandleRequestAsync(request);
 
     if (result != null)
     {
         Console.WriteLine(
-            $"Name: {result.Name.Value}" + Environment.NewLine +
+            $"Name: {result.Name}" + Environment.NewLine +
             $"Address: {result.Address}" + Environment.NewLine +
             $"Zip Code: {result.ZipCode}" + Environment.NewLine +
-            $"Phone Number: {result.PhoneNumber.Value}" + Environment.NewLine +
+            $"Phone Number: {result.PhoneNumber}" + Environment.NewLine +
             $"City: {result.City}"
             );
     }

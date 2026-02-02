@@ -1,5 +1,6 @@
-﻿using AS3Case.Application.Contracts.Dto;
-namespace AS3Case.Application.Contracts.Interfaces
+﻿using AS3Case.Application.CompanyLookup.Contracts.Dto.ExternalData;
+
+namespace AS3Case.Application.CompanyLookup.Contracts.Interfaces
 {
     public interface ICompanyLookupProvider
     {

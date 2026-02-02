@@ -1,5 +1,5 @@
-﻿using AS3Case.Application.Enums;
-using AS3Case.Application.UseCases.CompanyLookup;
+﻿using AS3Case.Application.CompanyLookup.Enums;
+using AS3Case.Application.CompanyLookup.UseCases;
 using AS3Case.Presentation.Console.Commands;
 using System.ComponentModel.DataAnnotations;
 

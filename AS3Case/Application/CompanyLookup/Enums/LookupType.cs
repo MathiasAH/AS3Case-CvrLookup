@@ -1,4 +1,4 @@
-﻿namespace AS3Case.Application.Enums
+﻿namespace AS3Case.Application.CompanyLookup.Enums
 {
     public enum LookupType
     {

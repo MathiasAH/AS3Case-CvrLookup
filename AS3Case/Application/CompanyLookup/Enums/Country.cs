@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AS3Case.Application.Enums
+namespace AS3Case.Application.CompanyLookup.Enums
 {
     public enum Country
     {

@@ -1,5 +1,5 @@
-﻿using AS3Case.Application.Contracts.Dto;
-using AS3Case.Application.Contracts.Interfaces;
+﻿using AS3Case.Application.CompanyLookup.Contracts.Dto.ExternalData;
+using AS3Case.Application.CompanyLookup.Contracts.Interfaces;
 using AS3Case.Infrastructure.ApiClients.NO.Dto;
 using Newtonsoft.Json;
 

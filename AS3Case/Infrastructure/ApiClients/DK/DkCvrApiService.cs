@@ -1,5 +1,5 @@
-﻿using AS3Case.Application.Contracts.Dto;
-using AS3Case.Application.Contracts.Interfaces;
+﻿using AS3Case.Application.CompanyLookup.Contracts.Dto.ExternalData;
+using AS3Case.Application.CompanyLookup.Contracts.Interfaces;
 using AS3Case.Infrastructure.ApiClients.DK.Dto;
 using Newtonsoft.Json;
 
@@ -41,14 +41,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             {
                 throw new Exception("Company not found");
             }
-            return new ExternalCompanyData
-            {
-                Name = result.Name,
-                Address = result.Address,
-                City = result.City,
-                ZipCode = result.Zipcode,
-                PhoneNumber = result.Phone
-            };
+            return DkCvrApiMapper.ToExternalCompanyData(result);
         }
         public async Task<ExternalCompanyData> LookupByNameAsync(string name)
         {
@@ -59,14 +52,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             {
                 throw new Exception("Company not found");
             }
-            return new ExternalCompanyData
-            {
-                Name = result.Name,
-                Address = result.Address,
-                City = result.City,
-                ZipCode = result.Zipcode,
-                PhoneNumber = result.Phone
-            };
+            return DkCvrApiMapper.ToExternalCompanyData(result);
         }
         public async Task<ExternalCompanyData> LookupByPhoneNumberAsync(string phoneNumber)
         {
@@ -76,14 +62,7 @@ namespace AS3Case.Infrastructure.ApiClients.DK
             {
                 throw new Exception("Company not found");
             }
-            return new ExternalCompanyData
-            {
-                Name = result.Name,
-                Address = result.Address,
-                City = result.City,
-                ZipCode = result.Zipcode,
-                PhoneNumber = result.Phone
-            };
+            return DkCvrApiMapper.ToExternalCompanyData(result);
         }
     }
 }
